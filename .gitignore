@@ -2,8 +2,21 @@ package com.company;
 
 import java.util.Random;
 import java.util.Scanner;
+import java.util.InputMismatchException;
 
 public class Main {
+
+    public static int inputInt(Scanner scan) {
+        System.out.println("введите число от 0 до 100:");
+        try {
+            return scan.nextInt();
+        } catch (InputMismatchException e) {
+            System.out.println("Введите корректное число");
+            scan.next();
+            // Функция вызывает саму себя же. Это называется рекурсия.
+            return inputInt(scan);
+        }
+    }
 
     public static void main(String[] args) {
         int randNumber = (int) (Math.random() * 101);
@@ -11,23 +24,20 @@ public class Main {
         Scanner scan = new Scanner(System.in);
         int i = 1;
 
-
-
-            System.out.println("введите число от 0 до 100:");
-            int number = scan.nextInt();
-
-
-
+            // Запрашиваем ввод через специальную функцию, которая будет получать
+            // ввод и не вернёт результат в переменную `number` до тех пор,
+            // пока не будет ошибки.
+            int number = inputInt(scan);
 
             while (i <= 100) {
                 if (number > randNumber) {
                     System.out.println("задуманное число меньше");
-                    number = scan.nextInt();
+                    number = inputInt(scan);
                     i++;
                 } else {
                     if (number < randNumber) {
                         System.out.println("задуманное число больше");
-                        number = scan.nextInt();
+                        number = inputInt(scan);
                         i++;
                     } else {
                         if (number == randNumber) {
